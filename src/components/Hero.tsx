@@ -1,14 +1,21 @@
 import { ArrowDown } from 'lucide-react';
-import { stats } from '../data/content';
+import { newsItems, promoItems, industryItems, filterAndSortByDate } from '../data/content';
 import DateWeather from './DateWeather';
 
-const statItems = [
-  { value: stats.news, label: '条资讯', variant: 'primary' as const },
-  { value: stats.promos, label: '条宣发', variant: 'muted' as const },
-  { value: stats.industry, label: '条变动', variant: 'surface' as const },
-];
-
 export default function Hero() {
+  const today = new Date();
+  const stats = {
+    news: filterAndSortByDate(newsItems, today).length,
+    promos: filterAndSortByDate(promoItems, today).length,
+    industry: filterAndSortByDate(industryItems, today).length,
+  };
+
+  const statItems = [
+    { value: stats.news, label: '条资讯', variant: 'primary' as const },
+    { value: stats.promos, label: '条宣发', variant: 'muted' as const },
+    { value: stats.industry, label: '条变动', variant: 'surface' as const },
+  ];
+
   return (
     <section className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 md:py-28">
       <div className="grid items-center gap-10 md:grid-cols-2 md:gap-12">
