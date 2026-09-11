@@ -1,8 +1,14 @@
+// ============================================================
+// 每日内容更新入口
+// 编辑下方三个数组即可更新首页资讯，无需改动组件代码。
+// 每次修改后提交并推送到 GitHub，GitHub Pages 会自动重新部署。
+// ============================================================
+
 export interface NewsItem {
   id: string;
   tag: string;
   source: string;
-  date: string;
+  date: string; // 格式：YYYY-MM-DD
   title: string;
   summary: string;
   url: string;
@@ -11,6 +17,7 @@ export interface NewsItem {
 export interface PromoItem {
   id: string;
   icon: string;
+  date: string; // 格式：YYYY-MM-DD
   title: string;
   summary: string;
   url: string;
@@ -19,11 +26,13 @@ export interface PromoItem {
 export interface IndustryItem {
   id: string;
   source: string;
-  date: string;
+  date: string; // 格式：YYYY-MM-DD
   title: string;
   summary: string;
   url: string;
 }
+
+export const lastUpdated = '2026-09-11';
 
 export const newsItems: NewsItem[] = [
   {
@@ -68,6 +77,7 @@ export const promoItems: PromoItem[] = [
   {
     id: 'promo-1',
     icon: 'Store',
+    date: '2026-09-09',
     title: '重制版《塞尔达传说 时之笛》11 月 5 日发售',
     summary: '任天堂直面会公布经典重制发售信息，数字版定价 449 港币。',
     url: 'https://gouhuo.qq.com/content/detail/0_20260909100624_LgJv35GRo',
@@ -75,6 +85,7 @@ export const promoItems: PromoItem[] = [
   {
     id: 'promo-2',
     icon: 'Swords',
+    date: '2026-09-10',
     title: '《漫威金刚狼》真人宣传视频公开',
     summary: '失眠组发布 PS5 独占新作真人宣传片，人类与变种人命运悬于一线。',
     url: 'https://www.ign.com.cn/marvels-wolverine/62701/man-wei-jin-gang-lang-zhen-ren-xuan-chuan-shi-pin',
@@ -82,6 +93,7 @@ export const promoItems: PromoItem[] = [
   {
     id: 'promo-3',
     icon: 'Crown',
+    date: '2026-09-10',
     title: '《流浪地球：望日》正式公布',
     summary: '刘慈欣原著授权，全新游戏首支预告片发布。',
     url: 'https://www.yystv.cn/n/1014746',
@@ -114,6 +126,11 @@ export const industryItems: IndustryItem[] = [
     url: 'https://www.yystv.cn/n/1014744',
   },
 ];
+
+// 按日期倒序排列，确保最新内容在前
+export const sortedNewsItems = [...newsItems].sort((a, b) => b.date.localeCompare(a.date));
+export const sortedPromoItems = [...promoItems].sort((a, b) => b.date.localeCompare(a.date));
+export const sortedIndustryItems = [...industryItems].sort((a, b) => b.date.localeCompare(a.date));
 
 export const stats = {
   news: newsItems.length,
