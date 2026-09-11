@@ -1,5 +1,6 @@
 import { ArrowDown } from 'lucide-react';
 import { stats } from '../data/content';
+import DateWeather from './DateWeather';
 
 const statItems = [
   { value: stats.news, label: '条资讯', variant: 'primary' as const },
@@ -12,9 +13,12 @@ export default function Hero() {
     <section className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 md:py-28">
       <div className="grid items-center gap-10 md:grid-cols-2 md:gap-12">
         <div className="space-y-6 animate-fade-in-up">
-          <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
-            每日游戏头条
-          </h1>
+          <div className="space-y-3">
+            <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
+              每日游戏头条
+            </h1>
+            <DateWeather />
+          </div>
           <p className="text-base text-muted-foreground sm:text-lg md:text-xl">
             精选资讯、宣发动态与大厂变动，一站式掌握。
           </p>
@@ -33,7 +37,7 @@ export default function Hero() {
         <div className="space-y-6 sm:space-y-8 animate-fade-in-up animate-delay-200">
           <figure className="overflow-hidden rounded-2xl border border-border shadow-lg">
             <img
-              src="/hero-gaming.jpg"
+              src={`${import.meta.env.BASE_URL}hero-gaming.jpg`}
               alt="Game Daily 主视觉"
               className="h-56 w-full object-cover sm:h-64 md:h-72 lg:h-80"
               loading="eager"
