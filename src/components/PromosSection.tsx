@@ -1,6 +1,6 @@
-import { Megaphone, ExternalLink, Store, Swords, Crown } from 'lucide-react';
+import { Megaphone, ExternalLink, Store, Swords, Crown, Calendar } from 'lucide-react';
 import SectionTitle from './SectionTitle';
-import { promoItems } from '../data/content';
+import { sortedPromoItems, lastUpdated } from '../data/content';
 
 const iconMap: Record<string, React.ElementType> = {
   Store,
@@ -17,8 +17,13 @@ export default function PromosSection() {
         description="官方商店页、宣传站与品牌页面，追踪你最期待的作品首发入口。"
       />
 
+      <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
+        <Calendar className="h-4 w-4" />
+        <span>最后更新：{lastUpdated}</span>
+      </div>
+
       <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
-        {promoItems.map((item, index) => {
+        {sortedPromoItems.map((item, index) => {
           const Icon = iconMap[item.icon] || Megaphone;
           return (
             <a
@@ -33,6 +38,7 @@ export default function PromosSection() {
                 <Icon className="h-5 w-5 text-primary sm:h-6 sm:w-6" />
               </div>
               <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">{item.date}</div>
                 <h3 className="text-base font-semibold text-card-foreground transition-colors group-hover:text-primary sm:text-lg">
                   {item.title}
                 </h3>
