@@ -2,6 +2,8 @@
 
 一个基于设计稿搭建的游戏资讯聚合落地页，使用 React + TypeScript + Vite + Tailwind CSS v4 构建。
 
+**在线预览：** https://ymmpanda0-hash.github.io/game-daily/
+
 ## 功能特性
 
 - 忠实还原设计稿视觉：配色、圆角、阴影、排版一致
@@ -24,6 +26,8 @@ game-daily/
 │   ├── App.tsx             # 页面组合
 │   ├── index.css           # Tailwind 主题与全局样式
 │   └── main.tsx            # 应用入口
+├── .github/workflows/      # GitHub Actions 自动部署
+│   └── deploy.yml
 ├── index.html
 ├── package.json
 ├── tsconfig.json
@@ -49,22 +53,22 @@ npm run build
 
 构建产物输出到 `dist/` 目录，可直接部署到任意静态托管服务。
 
-## 部署到互联网
+## 部署到 GitHub Pages
 
-### 方式一：Netlify / Vercel
+本项目已配置 GitHub Actions 自动部署。每次推送到 `main` 分支时，工作流会自动构建并发布到 GitHub Pages。
 
-1. 将本项目推送到 GitHub/GitLab/Bitbucket。
+目标地址：https://ymmpanda0-hash.github.io/game-daily/
+
+## 部署到其他平台
+
+### Netlify / Vercel
+
+1. 将本项目推送到 GitHub。
 2. 在 Netlify 或 Vercel 中选择「导入已有项目」。
 3. 构建命令填 `npm run build`，输出目录填 `dist`。
 4. 点击部署即可获得可分享的公网链接。
 
-### 方式二：GitHub Pages
-
-1. 将 `dist/` 目录作为分支或提交推送到仓库。
-2. 在仓库 Settings > Pages 中选择对应分支作为发布源。
-3. 访问 `https://<用户名>.github.io/<仓库名>`。
-
-### 方式三：任意静态服务器
+### 任意静态服务器
 
 将 `dist/` 目录中的文件上传到 Nginx、Apache、Cloudflare Pages、阿里云 OSS、腾讯云 COS 等静态托管即可。
 
