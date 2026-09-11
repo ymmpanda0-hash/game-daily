@@ -1,8 +1,9 @@
 // ============================================================
 // 内容数据源
 // 把所有资讯、宣发、变动按日期填入下方数组即可。
-// 页面会自动筛选出 15 天内（含今天）的最新内容并按日期倒序展示，
-// 超过 15 天的旧内容会自动隐藏，无需手动删除或每天编辑。
+// 页面打开时会使用访问者设备当前日期，自动筛选出 15 天内（含今天）
+// 的最新内容并按日期倒序展示，超过 15 天的旧内容会自动隐藏，
+// 无需手动删除或每天编辑/重新部署。
 // ============================================================
 
 export interface NewsItem {
@@ -33,13 +34,13 @@ export interface IndustryItem {
   url: string;
 }
 
-// 展示窗口：最近 N 天
+// 展示窗口：最近 N 天（含当天）
 export const DISPLAY_WINDOW_DAYS = 15;
 
 /**
  * 判断日期是否在展示窗口内（含当天）
  */
-function isWithinWindow(dateStr: string, today: Date) {
+export function isWithinWindow(dateStr: string, today: Date): boolean {
   const itemDate = new Date(dateStr + 'T00:00:00');
   const diffTime = today.getTime() - itemDate.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -49,7 +50,7 @@ function isWithinWindow(dateStr: string, today: Date) {
 /**
  * 按日期倒序排序并截取展示窗口内的内容
  */
-function filterAndSortByDate<T extends { date: string }>(items: T[], today: Date): T[] {
+export function filterAndSortByDate<T extends { date: string }>(items: T[], today: Date): T[] {
   return items
     .filter((item) => isWithinWindow(item.date, today))
     .sort((a, b) => b.date.localeCompare(a.date));
@@ -58,7 +59,7 @@ function filterAndSortByDate<T extends { date: string }>(items: T[], today: Date
 /**
  * 获取一组内容中的最新日期
  */
-function getLatestDate(items: { date: string }[]): string | null {
+export function getLatestDate(items: { date: string }[]): string | null {
   if (items.length === 0) return null;
   return items.reduce((latest, item) => (item.date > latest ? item.date : latest), items[0].date);
 }
@@ -155,27 +156,3 @@ export const industryItems: IndustryItem[] = [
     url: 'https://www.yystv.cn/n/1014744',
   },
 ];
-
-// 使用系统当前日期作为基准，自动筛选 15 天内内容
-const today = new Date();
-
-export const sortedNewsItems = filterAndSortByDate(newsItems, today);
-export const sortedPromoItems = filterAndSortByDate(promoItems, today);
-export const sortedIndustryItems = filterAndSortByDate(industryItems, today);
-
-export const stats = {
-  news: sortedNewsItems.length,
-  promos: sortedPromoItems.length,
-  industry: sortedIndustryItems.length,
-};
-
-// 动态计算最后更新日期
-const latestDates = [
-  getLatestDate(sortedNewsItems),
-  getLatestDate(sortedPromoItems),
-  getLatestDate(sortedIndustryItems),
-].filter(Boolean) as string[];
-
-export const lastUpdated = latestDates.length > 0
-  ? latestDates.reduce((latest, date) => (date > latest ? date : latest), latestDates[0])
-  : today.toISOString().split('T')[0];
