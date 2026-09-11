@@ -1,6 +1,6 @@
 import { Megaphone, ExternalLink, Store, Swords, Crown, Calendar } from 'lucide-react';
 import SectionTitle from './SectionTitle';
-import { sortedPromoItems, lastUpdated, DISPLAY_WINDOW_DAYS } from '../data/content';
+import { promoItems, filterAndSortByDate, getLatestDate, DISPLAY_WINDOW_DAYS } from '../data/content';
 
 const iconMap: Record<string, React.ElementType> = {
   Store,
@@ -9,6 +9,10 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 export default function PromosSection() {
+  const today = new Date();
+  const sortedPromoItems = filterAndSortByDate(promoItems, today);
+  const lastUpdated = getLatestDate(sortedPromoItems) || today.toISOString().split('T')[0];
+
   return (
     <section id="section-promos" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
       <SectionTitle
