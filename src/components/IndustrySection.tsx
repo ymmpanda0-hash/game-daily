@@ -1,8 +1,12 @@
 import { Building2, ExternalLink, Calendar } from 'lucide-react';
 import SectionTitle from './SectionTitle';
-import { sortedIndustryItems, lastUpdated, DISPLAY_WINDOW_DAYS } from '../data/content';
+import { industryItems, filterAndSortByDate, getLatestDate, DISPLAY_WINDOW_DAYS } from '../data/content';
 
 export default function IndustrySection() {
+  const today = new Date();
+  const sortedIndustryItems = filterAndSortByDate(industryItems, today);
+  const lastUpdated = getLatestDate(sortedIndustryItems) || today.toISOString().split('T')[0];
+
   return (
     <section id="section-industry" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
       <SectionTitle
