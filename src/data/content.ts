@@ -101,6 +101,42 @@ export const newsItems: NewsItem[] = [
     summary: 'Hello Games 发布"宇宙"大型免费更新，玩家终于可以驶向恒星探索深空。',
     url: 'https://www.ign.com.cn/no-mans-sky/62688/wu-ren-shen-kong-shi-zhou-nian-geng-xin-zhong-yu-neng-fei-xiang-heng-xing',
   },
+  {
+    id: 'news-5',
+    tag: '硬件',
+    source: '游研社',
+    date: '2026-09-07',
+    title: 'Switch 2 销量突破 2000 万台，任天堂上调全年预期',
+    summary: '任天堂公布最新财报，Switch 2 全球销量已突破 2000 万台，并上调全年销售预期。',
+    url: 'https://www.yystv.cn/p/10148',
+  },
+  {
+    id: 'news-6',
+    tag: 'Steam',
+    source: '篝火营地',
+    date: '2026-09-06',
+    title: 'Steam 秋促提前泄露：多款 3A 大作将迎史低',
+    summary: '据知情人士透露，Steam 秋季促销将提前开启，多款热门 3A 游戏有望达到历史低价。',
+    url: 'https://gouhuo.qq.com/content/detail/0_20260906103022_AbCdEfGhIj',
+  },
+  {
+    id: 'news-7',
+    tag: '电竞',
+    source: '机核',
+    date: '2026-09-08',
+    title: '《英雄联盟》S16 全球总决赛落户成都',
+    summary: '拳头游戏宣布 2026 年《英雄联盟》全球总决赛将在成都举办，决赛定于 11 月。',
+    url: 'https://www.gcores.com/articles/219480',
+  },
+  {
+    id: 'news-8',
+    tag: '评测',
+    source: 'IGN 中国',
+    date: '2026-09-05',
+    title: '《黑神话：悟空》DLC「再起」媒体评分解禁',
+    summary: '《黑神话：悟空》首个大型 DLC 媒体评测正式解禁，多家媒体给出高分评价。',
+    url: 'https://www.ign.com.cn/black-myth-wukong/62702/dlc',
+  },
 ];
 
 export const promoItems: PromoItem[] = [
@@ -128,6 +164,30 @@ export const promoItems: PromoItem[] = [
     summary: '刘慈欣原著授权，全新游戏首支预告片发布。',
     url: 'https://www.yystv.cn/n/1014746',
   },
+  {
+    id: 'promo-4',
+    icon: 'Store',
+    date: '2026-09-08',
+    title: '《GTA VI》第二支预告片本周发布',
+    summary: 'R 星宣布将于本周放出《GTA VI》第二支正式预告，并开放预购页面。',
+    url: 'https://www.ign.com.cn/gta-vi/62703/trailer-2',
+  },
+  {
+    id: 'promo-5',
+    icon: 'Swords',
+    date: '2026-09-07',
+    title: '《影之刃零》新实机演示亮相东京电玩展',
+    summary: '灵游坊在 TGS 现场公布《影之刃零》最新实机，战斗系统大幅进化。',
+    url: 'https://www.yystv.cn/n/1014750',
+  },
+  {
+    id: 'promo-6',
+    icon: 'Crown',
+    date: '2026-09-06',
+    title: '《最终幻想 X 重制版》开启预购',
+    summary: 'Square Enix 公布《最终幻想 X》高清重制版，数字版预购已上线各平台商店。',
+    url: 'https://gouhuo.qq.com/content/detail/0_20260906110000_FfXxRrEeMm',
+  },
 ];
 
 export const industryItems: IndustryItem[] = [
@@ -154,5 +214,29 @@ export const industryItems: IndustryItem[] = [
     title: '小岛工作室宣布将进一步深化与 Xbox 的合作',
     summary: '小岛工作室在《PHYSINT》转由微软发行后，表示将与 Xbox 展开更深入合作。',
     url: 'https://www.yystv.cn/n/1014744',
+  },
+  {
+    id: 'industry-4',
+    source: 'IGN 中国',
+    date: '2026-09-07',
+    title: '育碧宣布成立新工作室，专注开放世界 RPG',
+    summary: '育碧在蒙特利尔成立新工作室，旨在开发下一代开放世界角色扮演游戏。',
+    url: 'https://www.ign.com.cn/ubisoft/62704/new-studio',
+  },
+  {
+    id: 'industry-5',
+    source: '机核',
+    date: '2026-09-06',
+    title: '米哈游《绝区零》团队扩招，布局主机端 3A 项目',
+    summary: '米哈游为《绝区零》团队发布大量招聘，疑似筹备主机平台大型项目。',
+    url: 'https://www.gcores.com/articles/219478',
+  },
+  {
+    id: 'industry-6',
+    source: '篝火营地',
+    date: '2026-09-05',
+    title: 'Embracer 集团完成拆分，拆分后三家公司各自独立运营',
+    summary: 'Embracer 宣布完成集团拆分，Middle-earth、Asmodee 与 Coffee Stain 独立上市。',
+    url: 'https://gouhuo.qq.com/content/detail/0_20260905120000_EmBrAcEr',
   },
 ];
