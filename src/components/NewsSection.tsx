@@ -1,8 +1,12 @@
 import { Newspaper, ExternalLink, Calendar } from 'lucide-react';
 import SectionTitle from './SectionTitle';
-import { sortedNewsItems, lastUpdated, DISPLAY_WINDOW_DAYS } from '../data/content';
+import { newsItems, filterAndSortByDate, getLatestDate, DISPLAY_WINDOW_DAYS } from '../data/content';
 
 export default function NewsSection() {
+  const today = new Date();
+  const sortedNewsItems = filterAndSortByDate(newsItems, today);
+  const lastUpdated = getLatestDate(sortedNewsItems) || today.toISOString().split('T')[0];
+
   return (
     <section id="section-news" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
       <SectionTitle
