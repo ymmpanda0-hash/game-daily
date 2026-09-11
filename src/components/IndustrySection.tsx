@@ -1,6 +1,6 @@
-import { Building2, ExternalLink } from 'lucide-react';
+import { Building2, ExternalLink, Calendar } from 'lucide-react';
 import SectionTitle from './SectionTitle';
-import { industryItems } from '../data/content';
+import { sortedIndustryItems, lastUpdated } from '../data/content';
 
 export default function IndustrySection() {
   return (
@@ -11,8 +11,13 @@ export default function IndustrySection() {
         description="游戏行业的人事与组织动态，关注头部公司的战略调整与工作室命运。"
       />
 
+      <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
+        <Calendar className="h-4 w-4" />
+        <span>最后更新：{lastUpdated}</span>
+      </div>
+
       <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
-        {industryItems.map((item, index) => (
+        {sortedIndustryItems.map((item, index) => (
           <a
             key={item.id}
             href={item.url}
