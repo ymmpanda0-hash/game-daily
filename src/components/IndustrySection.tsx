@@ -1,0 +1,44 @@
+import { Building2, ExternalLink } from 'lucide-react';
+import SectionTitle from './SectionTitle';
+import { industryItems } from '../data/content';
+
+export default function IndustrySection() {
+  return (
+    <section id="section-industry" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      <SectionTitle
+        icon={Building2}
+        title="大厂变动"
+        description="游戏行业的人事与组织动态，关注头部公司的战略调整与工作室命运。"
+      />
+
+      <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
+        {industryItems.map((item, index) => (
+          <a
+            key={item.id}
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col gap-3 rounded-xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-5 animate-fade-in-up"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-muted-foreground">
+              <span>{item.source}</span>
+              <span>·</span>
+              <span>{item.date}</span>
+            </div>
+            <h3 className="text-base font-semibold text-card-foreground transition-colors group-hover:text-primary sm:text-lg">
+              {item.title}
+            </h3>
+            <p className="line-clamp-3 text-sm text-muted-foreground">
+              {item.summary}
+            </p>
+            <div className="mt-auto flex items-center gap-1 text-sm font-medium text-primary">
+              阅读全文
+              <ExternalLink className="h-3.5 w-3.5" />
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
