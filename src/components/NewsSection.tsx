@@ -1,6 +1,6 @@
-import { Newspaper, ExternalLink } from 'lucide-react';
+import { Newspaper, ExternalLink, Calendar } from 'lucide-react';
 import SectionTitle from './SectionTitle';
-import { newsItems } from '../data/content';
+import { sortedNewsItems, lastUpdated } from '../data/content';
 
 export default function NewsSection() {
   return (
@@ -11,8 +11,13 @@ export default function NewsSection() {
         description="聚焦主机、PC 与硬件领域的最新动态，每天为你打捞值得关注的游戏新闻。"
       />
 
+      <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
+        <Calendar className="h-4 w-4" />
+        <span>最后更新：{lastUpdated}</span>
+      </div>
+
       <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
-        {newsItems.map((item, index) => (
+        {sortedNewsItems.map((item, index) => (
           <a
             key={item.id}
             href={item.url}
