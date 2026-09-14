@@ -157,6 +157,42 @@ export const newsItems: NewsItem[] = [
     summary: '亚马逊《战神》真人剧公布主演更替，戴夫·巴蒂斯塔将出演奎托斯。',
     url: 'https://www.gcores.com/articles/218636',
   },
+  {
+    id: 'news-11',
+    tag: '赛事',
+    source: '机核',
+    date: '2026-09-14',
+    title: '小红花夺得《炉石传说》世界冠军赛冠军',
+    summary: '在暴雪嘉年华现场，小红花击败上届冠军小惕登顶，国服选手实现世界冠军三连冠。',
+    url: 'https://www.gcores.com/articles/219680',
+  },
+  {
+    id: 'news-12',
+    tag: '赛事',
+    source: '机核',
+    date: '2026-09-14',
+    title: '韩国击败沙特，夺得2026《守望先锋》世界杯冠军',
+    summary: '在暴雪嘉年华现场举行的2026年《守望先锋》世界杯中，韩国以4比1击败沙特，第四次夺冠。',
+    url: 'https://www.gcores.com/articles/219678',
+  },
+  {
+    id: 'news-13',
+    tag: '新作',
+    source: '机核',
+    date: '2026-09-14',
+    title: '《寻星者：余晖》现已开启试玩Demo',
+    summary: '团队制RPG《寻星者：余晖》开启试玩Demo，玩家可扮演多种职业在契约诸界展开40到60小时冒险。',
+    url: 'https://www.gcores.com/articles/219671',
+  },
+  {
+    id: 'news-14',
+    tag: '联动',
+    source: '机核',
+    date: '2026-09-14',
+    title: '《守望先锋》将与《赛博朋克：边缘行者》展开联动',
+    summary: '《守望先锋》宣布将联动《赛博朋克：边缘行者》，具体合作内容将在后续公布。',
+    url: 'https://www.gcores.com/articles/219679',
+  },
 ];
 
 export const promoItems: PromoItem[] = [
@@ -216,6 +252,14 @@ export const promoItems: PromoItem[] = [
     summary: 'IGN 中国在 TapTap 玩聚节期间试玩《inZOI》，体验全新"画布小镇"UGC 功能。',
     url: 'https://www.ign.com.cn/inzoi/62756/taptap-wan-ju-jie-inzoi-shi-wan-fang-tan-zhui-qiu-geng-shen-de-mo-ni-wei-du-ign-zhong-guo',
   },
+  {
+    id: 'promo-8',
+    icon: 'Crown',
+    date: '2026-09-14',
+    title: '健身节奏动作游戏《がんばれ！チアリズム》公开作曲家阵容',
+    summary: '朝凪担任角色设计、陽向葵ゅか配音的健身节奏动作游戏公开作曲家阵容，预计2027年发售并支持中文。',
+    url: 'https://www.yystv.cn/n/1014786',
+  },
 ];
 
 export const industryItems: IndustryItem[] = [
@@ -274,5 +318,21 @@ export const industryItems: IndustryItem[] = [
     title: '三冠加冕:Team Spirit夺得《Dota2》TI15冠军',
     summary: 'Team Spirit 击败对手夺得 TI15 冠军，成为《Dota2》历史上首支三冠战队。',
     url: 'https://www.gcores.com/articles/218692',
+  },
+  {
+    id: 'industry-8',
+    source: '机核',
+    date: '2026-09-14',
+    title: 'VR《Moss》系列开发商Polyarc Games宣布关闭',
+    summary: '以《Moss》系列闻名的西雅图工作室 Polyarc Games 宣布停止运营，并公布了29人员工名单呼吁招聘。',
+    url: 'https://www.gcores.com/articles/219664',
+  },
+  {
+    id: 'industry-9',
+    source: '机核',
+    date: '2026-09-14',
+    title: '彭博社透露索尼与小岛秀夫“分手”原因，工作室痛失Decima引擎',
+    summary: '索尼退出《PHYSINT》主要因预算、盈利与独占性顾虑，小岛工作室可能无法继续使用Decima引擎。',
+    url: 'https://www.gcores.com/articles/219665',
   },
 ];
