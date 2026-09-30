@@ -9,21 +9,23 @@ const WEEK_DAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
 const typeConfig: Record<
   CalendarEvent['type'],
-  { label: string; icon: typeof Play; dot: string; ring: string; bg: string }
+  { label: string; icon: typeof Play; dot: string; text: string; glow: string; bg: string }
 > = {
   pv: {
-    label: 'PV',
+    label: '宣发 PV',
     icon: Play,
-    dot: 'bg-sky-400',
-    ring: 'ring-sky-400/40',
-    bg: 'bg-sky-500/10',
+    dot: 'bg-sky-300',
+    text: 'text-sky-100',
+    glow: 'shadow-[0_0_10px_rgba(56,189,248,0.25)]',
+    bg: 'bg-sky-500/[0.12]',
   },
   release: {
-    label: '发售',
+    label: '今日发售',
     icon: Rocket,
-    dot: 'bg-rose-400',
-    ring: 'ring-rose-500/50',
-    bg: 'bg-rose-500/15',
+    dot: 'bg-rose-300',
+    text: 'text-rose-100',
+    glow: 'shadow-[0_0_14px_rgba(244,63,94,0.28)]',
+    bg: 'bg-rose-500/[0.14]',
   },
 };
 
@@ -74,22 +76,46 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
   const monthLabel = `${year}年${month + 1}月`;
 
   return (
-    <div className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#0B1220] via-[#111827] to-[#0F172A] text-white shadow-2xl">
+    <div className="relative w-full min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-slate-950/35 text-white shadow-2xl backdrop-blur-2xl">
+      {/* Mist / glow background */}
+      <div className="pointer-events-none absolute -left-1/4 -top-1/4 h-[140%] w-[140%] opacity-60 blur-3xl">
+        <div className="absolute left-[20%] top-[15%] h-[45%] w-[45%] rounded-full bg-sky-600/20" />
+        <div className="absolute bottom-[10%] right-[15%] h-[40%] w-[40%] rounded-full bg-rose-600/15" />
+        <div className="absolute left-[45%] top-[40%] h-[35%] w-[35%] rounded-full bg-violet-600/10" />
+      </div>
+
+      {/* Fine grid overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.08]"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)',
+          backgroundSize: '56px 56px',
+        }}
+      />
+
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/10 px-3 py-2.5 sm:px-5 sm:py-4">
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          <Calendar className="h-3.5 w-3.5 text-sky-300 sm:h-5 sm:w-5" />
-          <h3 className="text-xs font-bold tracking-wide sm:text-base">大厂新作日历</h3>
+      <div className="relative flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-8 sm:py-5">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-md sm:h-9 sm:w-9">
+            <Calendar className="h-4 w-4 text-sky-200 sm:h-5 sm:w-5" />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold tracking-wide text-white/95 sm:text-base">大厂新作日历</h3>
+            <p className="hidden text-[10px] text-white/40 sm:block">精选主机 / PC 大作宣发与发售节点</p>
+          </div>
         </div>
-        <span className="text-[10px] font-medium text-white/50 sm:text-sm">{monthLabel}</span>
+        <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70 backdrop-blur-md sm:px-4 sm:text-sm">
+          {monthLabel}
+        </span>
       </div>
 
       {/* Weekday headers */}
-      <div className="grid grid-cols-7 border-b border-white/10 text-center">
+      <div className="relative grid grid-cols-7 border-b border-white/10 text-center">
         {WEEK_DAYS.map((day) => (
           <div
             key={day}
-            className="py-1 text-[9px] font-semibold text-white/40 sm:py-2 sm:text-xs"
+            className="py-2 text-[10px] font-medium tracking-widest text-white/35 sm:py-3 sm:text-xs"
           >
             {day}
           </div>
@@ -97,63 +123,65 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
       </div>
 
       {/* Calendar grid */}
-      <div className="grid flex-1 auto-rows-fr grid-cols-7 min-w-0">
+      <div className="relative grid auto-rows-fr grid-cols-7 min-w-0">
         {cells.map((cell, index) => {
           const dateKey = cell.current ? formatDateKey(year, month, cell.day) : '';
           const dayEvents = eventsByDate[dateKey] || [];
           const isToday = dateKey === todayKey;
           const releaseEvent = dayEvents.find((e) => e.type === 'release');
+          const mainEvent = releaseEvent || dayEvents[0];
 
           return (
             <div
               key={index}
-              className={`group relative flex min-h-[48px] min-w-0 flex-col overflow-hidden border-b border-r border-white/5 p-0.5 transition-colors last:border-r-0 hover:bg-white/5 sm:min-h-[64px] sm:p-1.5 ${
-                cell.current ? 'text-white/90' : 'text-white/20'
-              } ${!cell.current ? 'bg-white/[0.02]' : ''} ${
+              className={`group relative flex min-h-[72px] min-w-0 flex-col justify-between overflow-hidden border-b border-r border-white/[0.06] p-1.5 transition-all duration-300 last:border-r-0 hover:bg-white/[0.06] sm:min-h-[96px] sm:p-2.5 ${
+                cell.current ? 'text-white/90' : 'text-white/25'
+              } ${!cell.current ? 'bg-white/[0.015]' : ''} ${
                 releaseEvent
-                  ? `ring-1 ring-inset ${typeConfig.release.ring} ${typeConfig.release.bg}`
+                  ? `${typeConfig.release.bg} ${typeConfig.release.glow}`
                   : ''
               }`}
             >
+              {/* Day number */}
               <div className="flex items-start justify-between">
                 <span
-                  className={`flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-semibold sm:h-6 sm:w-6 sm:text-xs ${
+                  className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-medium sm:h-7 sm:w-7 sm:text-xs ${
                     isToday
-                      ? 'bg-sky-500 text-white'
-                      : 'text-white/70 group-hover:text-white'
+                      ? 'bg-sky-500 text-white shadow-[0_0_12px_rgba(14,165,233,0.55)]'
+                      : 'text-white/60 group-hover:text-white'
                   }`}
                 >
                   {cell.day}
                 </span>
-                {dayEvents.length > 0 && (
-                  <span className="flex h-1 w-1 rounded-full bg-sky-400 sm:h-1.5 sm:w-1.5" />
+                {dayEvents.length > 1 && (
+                  <span className="text-[8px] font-medium text-white/30 sm:text-[10px]">
+                    +{dayEvents.length - 1}
+                  </span>
                 )}
               </div>
 
-              <div className="mt-auto flex flex-col gap-0.5">
-                {dayEvents.slice(0, 1).map((event) => {
-                  const config = typeConfig[event.type];
-                  const Icon = config.icon;
-                  return (
-                    <a
-                      key={event.id}
-                      href={event.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block min-w-0 rounded px-0.5 py-0.5 transition-colors hover:bg-white/10 sm:px-1"
-                      title={event.title}
-                    >
-                      <div className="flex items-center gap-0.5 sm:gap-1">
-                        <Icon className={`h-2 w-2 flex-shrink-0 sm:h-3 sm:w-3 ${config.dot.replace('bg-', 'text-')}`} />
-                        <span className="line-clamp-2 min-w-0 text-[8px] leading-tight text-white/80 sm:text-[11px]">
-                          {event.title}
-                        </span>
-                      </div>
-                    </a>
-                  );
-                })}
-                {dayEvents.length > 1 && (
-                  <span className="text-[7px] text-white/40 sm:text-[10px]">+{dayEvents.length - 1}</span>
+              {/* Event */}
+              <div className="mt-auto flex flex-col gap-1">
+                {mainEvent && (
+                  <a
+                    href={mainEvent.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex min-w-0 items-center gap-1 rounded-md border border-white/5 ${typeConfig[mainEvent.type].bg} px-1 py-0.5 backdrop-blur-sm transition-all hover:border-white/15 hover:bg-white/10 sm:px-1.5 sm:py-1`}
+                    title={mainEvent.title}
+                  >
+                    {(() => {
+                      const Icon = typeConfig[mainEvent.type].icon;
+                      return (
+                        <Icon
+                          className={`h-2.5 w-2.5 flex-shrink-0 sm:h-3.5 sm:w-3.5 ${typeConfig[mainEvent.type].dot.replace('bg-', 'text-')}`}
+                        />
+                      );
+                    })()}
+                    <span className="line-clamp-2 min-w-0 text-[9px] leading-tight text-white/85 sm:text-xs">
+                      {mainEvent.title}
+                    </span>
+                  </a>
                 )}
               </div>
             </div>
@@ -162,13 +190,13 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap items-center gap-3 border-t border-white/10 px-3 py-2 sm:gap-4 sm:px-4">
+      <div className="relative flex flex-wrap items-center justify-center gap-4 border-t border-white/10 px-4 py-3 sm:gap-6 sm:py-4">
         {(Object.keys(typeConfig) as CalendarEvent['type'][]).map((type) => {
           const config = typeConfig[type];
           return (
-            <div key={type} className="flex items-center gap-1">
-              <span className={`h-1.5 w-1.5 rounded-full sm:h-2 sm:w-2 ${config.dot}`} />
-              <span className="text-[9px] text-white/50 sm:text-[10px]">{config.label}</span>
+            <div key={type} className="flex items-center gap-1.5">
+              <span className={`h-1.5 w-1.5 rounded-full shadow-[0_0_6px_currentColor] sm:h-2 sm:w-2 ${config.dot}`} />
+              <span className="text-[10px] text-white/45 sm:text-xs">{config.label}</span>
             </div>
           );
         })}
