@@ -43,7 +43,7 @@ export default function Hero() {
         </div>
 
         <div className="space-y-6 sm:space-y-8 animate-fade-in-up animate-delay-200">
-          <div className="h-80 sm:h-96 md:h-[26rem] lg:h-[28rem]">
+          <div className="h-80 max-w-full overflow-hidden sm:h-96 md:h-[26rem] lg:h-[28rem]">
             <GameCalendar today={today} />
           </div>
 
