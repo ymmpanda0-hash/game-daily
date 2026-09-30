@@ -1,6 +1,7 @@
 import { ArrowDown } from 'lucide-react';
 import { newsItems, promoItems, industryItems, filterAndSortByDate } from '../data/content';
 import DateWeather from './DateWeather';
+import GameCalendar from './GameCalendar';
 
 export default function Hero() {
   const today = new Date();
@@ -42,14 +43,9 @@ export default function Hero() {
         </div>
 
         <div className="space-y-6 sm:space-y-8 animate-fade-in-up animate-delay-200">
-          <figure className="overflow-hidden rounded-2xl border border-border shadow-lg">
-            <img
-              src={`${import.meta.env.BASE_URL}hero-gaming.jpg`}
-              alt="Game Daily 主视觉"
-              className="h-56 w-full object-cover sm:h-64 md:h-72 lg:h-80"
-              loading="eager"
-            />
-          </figure>
+          <div className="h-80 sm:h-96 md:h-[26rem] lg:h-[28rem]">
+            <GameCalendar today={today} />
+          </div>
 
           <div className="flex items-center justify-center gap-4 sm:gap-6">
             {statItems.map((stat) => {
