@@ -140,13 +140,15 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
                       href={event.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-0.5 rounded px-0.5 py-0.5 transition-colors hover:bg-white/10 sm:gap-1 sm:px-1"
+                      className="block min-w-0 rounded px-0.5 py-0.5 transition-colors hover:bg-white/10 sm:px-1"
                       title={event.title}
                     >
-                      <Icon className={`h-2 w-2 flex-shrink-0 sm:h-3 sm:w-3 ${config.dot.replace('bg-', 'text-')}`} />
-                      <span className="line-clamp-2 text-[8px] leading-tight text-white/80 sm:text-[11px]">
-                        {event.title}
-                      </span>
+                      <div className="flex items-center gap-0.5 sm:gap-1">
+                        <Icon className={`h-2 w-2 flex-shrink-0 sm:h-3 sm:w-3 ${config.dot.replace('bg-', 'text-')}`} />
+                        <span className="line-clamp-2 min-w-0 text-[8px] leading-tight text-white/80 sm:text-[11px]">
+                          {event.title}
+                        </span>
+                      </div>
                     </a>
                   );
                 })}
