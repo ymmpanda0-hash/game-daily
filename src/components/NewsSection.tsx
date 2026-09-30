@@ -34,7 +34,7 @@ export default function NewsSection() {
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col gap-3 rounded-xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-5 animate-fade-in-up"
+              className="group flex min-w-0 flex-col gap-3 rounded-xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-5 animate-fade-in-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-muted-foreground">
@@ -45,7 +45,7 @@ export default function NewsSection() {
                 <span>·</span>
                 <span>{item.date}</span>
               </div>
-              <h3 className="text-base font-semibold text-card-foreground transition-colors group-hover:text-primary sm:text-lg">
+              <h3 className="break-words text-base font-semibold text-card-foreground transition-colors group-hover:text-primary sm:text-lg">
                 {item.title}
               </h3>
               <p className="line-clamp-2 text-sm text-muted-foreground">
