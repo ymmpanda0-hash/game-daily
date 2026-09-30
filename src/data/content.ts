@@ -810,16 +810,16 @@ export const calendarEvents: CalendarEvent[] = [
   {
     id: 'cal-1',
     date: '2026-09-17',
-    title: '怪物猎人荒野：凌越 / 炎王龙登场 PV',
+    title: '《Monster Hunter Wilds: Ascendance》奇怪龙将登场！',
     type: 'pv',
-    url: 'https://www.bilibili.com/video/BV12tKVeXE3r/',
+    url: 'https://www.bilibili.com/video/BV1Rihe6eEdo/',
   },
   {
     id: 'cal-2',
     date: '2026-09-18',
-    title: '影之刃零 / TGA 定档宣传片',
+    title: '《影之刃零》专场 State of Play 全程回顾',
     type: 'pv',
-    url: 'https://www.bilibili.com/video/BV1FNmgB2EA1/',
+    url: 'https://www.bilibili.com/video/BV1Zdbi6rER9/',
   },
   {
     id: 'cal-3',
@@ -866,9 +866,9 @@ export const calendarEvents: CalendarEvent[] = [
   {
     id: 'cal-9',
     date: '2026-09-28',
-    title: '我的世界 / 新维度“筛界”PV',
+    title: '【我的世界建筑分享】创意雷达站，信号满格！',
     type: 'pv',
-    url: 'https://m.bilibili.com/video/BV1DmhP6yE3d',
+    url: 'https://www.bilibili.com/video/BV1e6aJ6bEhD/',
   },
   {
     id: 'cal-10',
