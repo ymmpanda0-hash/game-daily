@@ -29,26 +29,35 @@ const typeConfig: Record<
   },
 };
 
-function getDaysInMonth(year: number, month: number) {
-  return new Date(year, month + 1, 0).getDate();
+const RANGE_DAYS = 15;
+
+function startOfDay(date: Date) {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  return d;
 }
 
-function getFirstDayOfMonth(year: number, month: number) {
-  return new Date(year, month, 1).getDay();
+function addDays(date: Date, days: number) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
 }
 
-function formatDateKey(year: number, month: number, day: number) {
-  const m = String(month + 1).padStart(2, '0');
-  const d = String(day).padStart(2, '0');
-  return `${year}-${m}-${d}`;
+function formatDateKey(date: Date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }
 
 export default function GameCalendar({ today = new Date() }: GameCalendarProps) {
-  const year = today.getFullYear();
-  const month = today.getMonth();
-  const daysInMonth = getDaysInMonth(year, month);
-  const firstDay = getFirstDayOfMonth(year, month);
-  const todayKey = formatDateKey(year, month, today.getDate());
+  const base = startOfDay(today);
+  const start = addDays(base, -RANGE_DAYS);
+  const end = addDays(base, RANGE_DAYS);
+
+  const gridStart = addDays(start, -start.getDay());
+  const gridEnd = addDays(end, 6 - end.getDay());
+  const todayKey = formatDateKey(base);
 
   const eventsByDate = calendarEvents.reduce<Record<string, CalendarEvent[]>>((acc, event) => {
     const key = event.date;
@@ -57,23 +66,15 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
     return acc;
   }, {});
 
-  const cells: { day: number; current: boolean }[] = [];
-
-  const prevDays = getDaysInMonth(year, month - 1);
-  for (let i = firstDay - 1; i >= 0; i--) {
-    cells.push({ day: prevDays - i, current: false });
+  const days: Date[] = [];
+  for (let d = new Date(gridStart); d.getTime() <= gridEnd.getTime(); d.setDate(d.getDate() + 1)) {
+    days.push(new Date(d));
   }
 
-  for (let i = 1; i <= daysInMonth; i++) {
-    cells.push({ day: i, current: true });
-  }
-
-  const remaining = (7 - (cells.length % 7)) % 7;
-  for (let i = 1; i <= remaining; i++) {
-    cells.push({ day: i, current: false });
-  }
-
-  const monthLabel = `${year}年${month + 1}月`;
+  const rangeLabel =
+    start.getMonth() === end.getMonth()
+      ? `${base.getFullYear()}年${start.getMonth() + 1}月${start.getDate()}日-${end.getDate()}日`
+      : `${base.getFullYear()}年${start.getMonth() + 1}月${start.getDate()}日 - ${end.getMonth() + 1}月${end.getDate()}日`;
 
   return (
     <div className="relative w-full min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-slate-950/35 text-white shadow-2xl backdrop-blur-2xl">
@@ -106,7 +107,7 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
           </div>
         </div>
         <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70 backdrop-blur-md sm:px-4 sm:text-sm">
-          {monthLabel}
+          {rangeLabel}
         </span>
       </div>
 
@@ -124,8 +125,9 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
 
       {/* Calendar grid */}
       <div className="relative grid auto-rows-fr grid-cols-7 min-w-0">
-        {cells.map((cell, index) => {
-          const dateKey = cell.current ? formatDateKey(year, month, cell.day) : '';
+        {days.map((day, index) => {
+          const dateKey = formatDateKey(day);
+          const inRange = day.getTime() >= start.getTime() && day.getTime() <= end.getTime();
           const dayEvents = eventsByDate[dateKey] || [];
           const isToday = dateKey === todayKey;
           const releaseEvent = dayEvents.find((e) => e.type === 'release');
@@ -135,8 +137,8 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
             <div
               key={index}
               className={`group relative flex min-h-[72px] min-w-0 flex-col justify-between overflow-hidden border-b border-r border-white/[0.06] p-1.5 transition-all duration-300 last:border-r-0 hover:bg-white/[0.06] sm:min-h-[96px] sm:p-2.5 ${
-                cell.current ? 'text-white/90' : 'text-white/25'
-              } ${!cell.current ? 'bg-white/[0.015]' : ''} ${
+                inRange ? 'text-white/90' : 'text-white/25'
+              } ${!inRange ? 'bg-white/[0.015]' : ''} ${
                 releaseEvent
                   ? `${typeConfig.release.bg} ${typeConfig.release.glow}`
                   : ''
@@ -151,7 +153,7 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
                       : 'text-white/60 group-hover:text-white'
                   }`}
                 >
-                  {cell.day}
+                  {day.getDate()}
                 </span>
                 {dayEvents.length > 1 && (
                   <span className="text-[8px] font-medium text-white/30 sm:text-[10px]">
