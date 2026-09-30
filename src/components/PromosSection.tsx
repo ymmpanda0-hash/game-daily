@@ -42,7 +42,7 @@ export default function PromosSection() {
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col gap-4 rounded-xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-5 animate-fade-in-up"
+                className="group flex min-w-0 flex-col gap-4 rounded-xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-5 animate-fade-in-up"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-muted sm:h-12 sm:w-12">
@@ -50,7 +50,7 @@ export default function PromosSection() {
                 </div>
                 <div className="space-y-2">
                   <div className="text-xs text-muted-foreground">{item.date}</div>
-                  <h3 className="text-base font-semibold text-card-foreground transition-colors group-hover:text-primary sm:text-lg">
+                  <h3 className="break-words text-base font-semibold text-card-foreground transition-colors group-hover:text-primary sm:text-lg">
                     {item.title}
                   </h3>
                   <p className="text-sm text-muted-foreground">{item.summary}</p>
