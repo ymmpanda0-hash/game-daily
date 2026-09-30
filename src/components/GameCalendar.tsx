@@ -107,7 +107,7 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
           return (
             <div
               key={index}
-              className={`group relative flex min-h-[48px] flex-col border-b border-r border-white/5 p-0.5 transition-colors last:border-r-0 hover:bg-white/5 sm:min-h-[64px] sm:p-1.5 ${
+              className={`group relative flex min-h-[48px] min-w-0 flex-col overflow-hidden border-b border-r border-white/5 p-0.5 transition-colors last:border-r-0 hover:bg-white/5 sm:min-h-[64px] sm:p-1.5 ${
                 cell.current ? 'text-white/90' : 'text-white/20'
               } ${!cell.current ? 'bg-white/[0.02]' : ''} ${
                 releaseEvent
