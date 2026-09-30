@@ -18,10 +18,11 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 md:py-28">
-      <div className="grid items-center gap-10 md:grid-cols-2 md:gap-12">
-        <div className="space-y-6 animate-fade-in-up">
-          <div className="space-y-3">
+    <section className="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 md:py-20">
+      {/* Top intro */}
+      <div className="mb-8 flex flex-col items-start gap-6 md:mb-10 md:flex-row md:items-end md:justify-between">
+        <div className="max-w-2xl space-y-4 animate-fade-in-up">
+          <div className="space-y-2">
             <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
               每日游戏头条
             </h1>
@@ -42,33 +43,33 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="space-y-6 sm:space-y-8 animate-fade-in-up animate-delay-200">
-          <div className="h-80 max-w-full overflow-hidden sm:h-96 md:h-[26rem] lg:h-[28rem]">
-            <GameCalendar today={today} />
-          </div>
+        {/* Stats */}
+        <div className="flex items-center gap-3 sm:gap-4 animate-fade-in-up animate-delay-100">
+          {statItems.map((stat) => {
+            const variantClasses = {
+              primary: 'bg-primary text-primary-foreground',
+              muted: 'bg-muted text-foreground',
+              surface: 'bg-[var(--color-surface-2)] text-foreground',
+            };
 
-          <div className="flex items-center justify-center gap-4 sm:gap-6">
-            {statItems.map((stat) => {
-              const variantClasses = {
-                primary: 'bg-primary text-primary-foreground',
-                muted: 'bg-muted text-foreground',
-                surface: 'bg-[var(--color-surface-2)] text-foreground',
-              };
-
-              return (
-                <div
-                  key={stat.label}
-                  className={`flex h-20 w-20 flex-col items-center justify-center rounded-full shadow-md transition-transform hover:scale-105 sm:h-24 sm:w-24 ${variantClasses[stat.variant]}`}
-                >
-                  <span className="text-xl font-bold sm:text-2xl">{stat.value}</span>
-                  <span className={`text-xs ${stat.variant === 'primary' ? 'opacity-90' : 'opacity-80'}`}>
-                    {stat.label}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
+            return (
+              <div
+                key={stat.label}
+                className={`flex h-[4.5rem] w-[4.5rem] flex-col items-center justify-center rounded-2xl shadow-md transition-transform hover:scale-105 sm:h-24 sm:w-24 sm:rounded-full ${variantClasses[stat.variant]}`}
+              >
+                <span className="text-xl font-bold sm:text-2xl">{stat.value}</span>
+                <span className={`text-xs ${stat.variant === 'primary' ? 'opacity-90' : 'opacity-80'}`}>
+                  {stat.label}
+                </span>
+              </div>
+            );
+          })}
         </div>
+      </div>
+
+      {/* Full-width calendar */}
+      <div className="animate-fade-in-up animate-delay-200">
+        <GameCalendar today={today} />
       </div>
     </section>
   );
