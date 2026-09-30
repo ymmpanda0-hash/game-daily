@@ -1,5 +1,5 @@
 import { CalendarEvent, calendarEvents } from '../data/content';
-import { Calendar, Play, Rocket, Download, Sparkles, CircleDot } from 'lucide-react';
+import { Calendar, Play, Rocket } from 'lucide-react';
 
 interface GameCalendarProps {
   today?: Date;
@@ -9,13 +9,22 @@ const WEEK_DAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
 const typeConfig: Record<
   CalendarEvent['type'],
-  { label: string; icon: typeof Play; dot: string }
+  { label: string; icon: typeof Play; dot: string; ring: string; bg: string }
 > = {
-  pv: { label: 'PV', icon: Play, dot: 'bg-sky-400' },
-  release: { label: '发售', icon: Rocket, dot: 'bg-emerald-400' },
-  demo: { label: '试玩', icon: Download, dot: 'bg-violet-400' },
-  update: { label: '更新', icon: Sparkles, dot: 'bg-amber-400' },
-  event: { label: '节点', icon: CircleDot, dot: 'bg-rose-400' },
+  pv: {
+    label: 'PV',
+    icon: Play,
+    dot: 'bg-sky-400',
+    ring: 'ring-sky-400/40',
+    bg: 'bg-sky-500/10',
+  },
+  release: {
+    label: '发售',
+    icon: Rocket,
+    dot: 'bg-rose-400',
+    ring: 'ring-rose-500/50',
+    bg: 'bg-rose-500/15',
+  },
 };
 
 function getDaysInMonth(year: number, month: number) {
@@ -48,18 +57,15 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
 
   const cells: { day: number; current: boolean }[] = [];
 
-  // 上个月填充
   const prevDays = getDaysInMonth(year, month - 1);
   for (let i = firstDay - 1; i >= 0; i--) {
     cells.push({ day: prevDays - i, current: false });
   }
 
-  // 当月
   for (let i = 1; i <= daysInMonth; i++) {
     cells.push({ day: i, current: true });
   }
 
-  // 下个月填充，补齐最后一行
   const remaining = (7 - (cells.length % 7)) % 7;
   for (let i = 1; i <= remaining; i++) {
     cells.push({ day: i, current: false });
@@ -68,14 +74,14 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
   const monthLabel = `${year}年${month + 1}月`;
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#0B1220] via-[#111827] to-[#0F172A] text-white shadow-2xl">
+    <div className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#0B1220] via-[#111827] to-[#0F172A] text-white shadow-2xl">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-5 sm:py-4">
-        <div className="flex items-center gap-2">
-          <Calendar className="h-4 w-4 text-sky-300 sm:h-5 sm:w-5" />
-          <h3 className="text-sm font-bold tracking-wide sm:text-base">大厂新作日历</h3>
+      <div className="flex items-center justify-between border-b border-white/10 px-3 py-2.5 sm:px-5 sm:py-4">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <Calendar className="h-3.5 w-3.5 text-sky-300 sm:h-5 sm:w-5" />
+          <h3 className="text-xs font-bold tracking-wide sm:text-base">大厂新作日历</h3>
         </div>
-        <span className="text-xs font-medium text-white/50 sm:text-sm">{monthLabel}</span>
+        <span className="text-[10px] font-medium text-white/50 sm:text-sm">{monthLabel}</span>
       </div>
 
       {/* Weekday headers */}
@@ -83,7 +89,7 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
         {WEEK_DAYS.map((day) => (
           <div
             key={day}
-            className="py-1.5 text-[10px] font-semibold text-white/40 sm:py-2 sm:text-xs"
+            className="py-1 text-[9px] font-semibold text-white/40 sm:py-2 sm:text-xs"
           >
             {day}
           </div>
@@ -91,22 +97,27 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
       </div>
 
       {/* Calendar grid */}
-      <div className="grid flex-1 auto-rows-fr grid-cols-7">
+      <div className="grid flex-1 auto-rows-fr grid-cols-7 min-w-0">
         {cells.map((cell, index) => {
           const dateKey = cell.current ? formatDateKey(year, month, cell.day) : '';
           const dayEvents = eventsByDate[dateKey] || [];
           const isToday = dateKey === todayKey;
+          const releaseEvent = dayEvents.find((e) => e.type === 'release');
 
           return (
             <div
               key={index}
-              className={`group relative flex min-h-[52px] flex-col border-b border-r border-white/5 p-1 transition-colors last:border-r-0 hover:bg-white/5 sm:min-h-[64px] sm:p-1.5 ${
+              className={`group relative flex min-h-[48px] flex-col border-b border-r border-white/5 p-0.5 transition-colors last:border-r-0 hover:bg-white/5 sm:min-h-[64px] sm:p-1.5 ${
                 cell.current ? 'text-white/90' : 'text-white/20'
-              } ${!cell.current ? 'bg-white/[0.02]' : ''}`}
+              } ${!cell.current ? 'bg-white/[0.02]' : ''} ${
+                releaseEvent
+                  ? `ring-1 ring-inset ${typeConfig.release.ring} ${typeConfig.release.bg}`
+                  : ''
+              }`}
             >
               <div className="flex items-start justify-between">
                 <span
-                  className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-semibold sm:h-6 sm:w-6 sm:text-xs ${
+                  className={`flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-semibold sm:h-6 sm:w-6 sm:text-xs ${
                     isToday
                       ? 'bg-sky-500 text-white'
                       : 'text-white/70 group-hover:text-white'
@@ -115,7 +126,7 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
                   {cell.day}
                 </span>
                 {dayEvents.length > 0 && (
-                  <span className="flex h-1.5 w-1.5 rounded-full bg-sky-400 sm:h-2 sm:w-2" />
+                  <span className="flex h-1 w-1 rounded-full bg-sky-400 sm:h-1.5 sm:w-1.5" />
                 )}
               </div>
 
@@ -132,15 +143,15 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
                       className="flex items-center gap-0.5 rounded px-0.5 py-0.5 transition-colors hover:bg-white/10 sm:gap-1 sm:px-1"
                       title={event.title}
                     >
-                      <Icon className={`h-2.5 w-2.5 flex-shrink-0 sm:h-3 sm:w-3 ${config.dot.replace('bg-', 'text-')}`} />
-                      <span className="line-clamp-2 text-[9px] leading-tight text-white/80 sm:text-[11px]">
+                      <Icon className={`h-2 w-2 flex-shrink-0 sm:h-3 sm:w-3 ${config.dot.replace('bg-', 'text-')}`} />
+                      <span className="line-clamp-2 text-[8px] leading-tight text-white/80 sm:text-[11px]">
                         {event.title}
                       </span>
                     </a>
                   );
                 })}
                 {dayEvents.length > 1 && (
-                  <span className="text-[8px] text-white/40 sm:text-[10px]">+{dayEvents.length - 1}</span>
+                  <span className="text-[7px] text-white/40 sm:text-[10px]">+{dayEvents.length - 1}</span>
                 )}
               </div>
             </div>
@@ -149,7 +160,7 @@ export default function GameCalendar({ today = new Date() }: GameCalendarProps) 
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap items-center gap-2 border-t border-white/10 px-3 py-2 sm:gap-4 sm:px-4">
+      <div className="flex flex-wrap items-center gap-3 border-t border-white/10 px-3 py-2 sm:gap-4 sm:px-4">
         {(Object.keys(typeConfig) as CalendarEvent['type'][]).map((type) => {
           const config = typeConfig[type];
           return (
