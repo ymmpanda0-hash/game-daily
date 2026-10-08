@@ -532,7 +532,7 @@ export const newsItems: NewsItem[] = [
     source: '机核',
     date: '2026-10-08',
     title: '放置钓鱼冒险游戏《汪洋大钓》将于本周五发售',
-    summary: '由 Luka's Games 打造的放置钓鱼冒险游戏《汪洋大钓》将于本周五发售。',
+    summary: '由 Luka\'s Games 打造的放置钓鱼冒险游戏《汪洋大钓》将于本周五发售。',
     url: 'https://www.gcores.com/articles/220574',
   },
   {
@@ -808,7 +808,7 @@ export const promoItems: PromoItem[] = [
     icon: 'Crown',
     date: '2026-10-08',
     title: '放置钓鱼冒险游戏《汪洋大钓》将于本周五发售',
-    summary: '由 Luka's Games 打造的放置钓鱼冒险游戏《汪洋大钓》将于本周五发售。',
+    summary: '由 Luka\'s Games 打造的放置钓鱼冒险游戏《汪洋大钓》将于本周五发售。',
     url: 'https://www.gcores.com/articles/220574',
   },
 ];
@@ -1139,7 +1139,7 @@ export const calendarEvents: CalendarEvent[] = [
   {
     id: 'cal-15',
     date: '2026-10-15',
-    title: 'Castlevania: Belmont's Curse / 今日发售',
+    title: 'Castlevania: Belmont\'s Curse / 今日发售',
     type: 'release',
     url: 'https://www.gcores.com/articles/220477',
   },
